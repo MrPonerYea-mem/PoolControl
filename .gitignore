@@ -1,0 +1,12 @@
+HELP.md
+.gradle
+.idea
+build/
+build/classes/**
+**/.metadata/
+**/.settings/**
+**/bin/**
+**/target/**
+**/.classpath
+**/.project
+
