@@ -20,15 +20,16 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation("org.springframework.boot:spring-boot-starter")
     implementation 'com.h2database:h2:1.4.200'
-	compileOnly 'org.projectlombok:lombok'
+    implementation 'junit:junit:4.12'
+    compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.11.4")
 	implementation("com.fasterxml.jackson.core:jackson-core:2.11.4")
@@ -39,8 +40,18 @@ dependencies {
 	//swagger
 	implementation("io.springfox:springfox-swagger2:2.9.2")
 	implementation("io.springfox:springfox-swagger-ui:2.9.2")
+
+	//test
+	testImplementation("org.springframework:spring-test:5.3.9")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+	}
+
+	//mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail:2.5.4'
+
 }
 
 test {
 	useJUnitPlatform()
 }
+
