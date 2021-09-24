@@ -11,6 +11,9 @@ import java.util.Date;
 @Data
 @ApiModel("DTO - для регистрации пользователя")
 public class UserRequestDto {
+    @NotNull(message = "email - не должен быть пустым")
+    private String email;
+
     @NotNull(message = "username - не должен быть пустым")
     private String username;
 
@@ -23,7 +26,7 @@ public class UserRequestDto {
 
     private Integer timeToWork;
 
-    private Date preferTimeEnd;
+    private Integer preferTimeEnd;
 
-    private Date preferTimeStart;
+    private Integer preferTimeStart;
 }
