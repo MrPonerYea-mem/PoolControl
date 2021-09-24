@@ -16,5 +16,5 @@ public class GroupRequestDto {
     @NotNull(message = "cloakroomW - не должен быть пустым")
     private Integer cloakroomW;
     @NotNull(message = "instructor - не должен быть пустым")
-    private UserEntity instructor;
+    private Long instructor_id;
 }

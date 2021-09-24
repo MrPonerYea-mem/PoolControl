@@ -32,40 +32,46 @@ public class GroupServiceImpl implements GroupService {
         groupEntity.setTimeStart(groupRequestDto.getTimeStart());
         groupEntity.setCloakroomW(groupRequestDto.getCloakroomW());
         groupEntity.setCloakroomM(groupRequestDto.getCloakroomM());
-        groupEntity.setInstructor(groupRequestDto.getInstructor());
+
+        //TODO це костыль надо будет переделать
+        UserEntity userEntity = userService.findByIdOrThrow(groupRequestDto.getInstructor_id());
+        checkUserRole(userEntity, RoleEnum.INSTRUCTOR);
+
+        groupEntity.setInstructor(userEntity);
         return groupRepository.save(groupEntity);
     }
 
     @Override
-    public GroupEntity updateInstructorInGroup(UserEntity userEntity, Integer groupId) {
+    public GroupEntity updateInstructorInGroup(UserEntity userEntity, Long groupId) {
         checkUserRole(userEntity, RoleEnum.INSTRUCTOR);
         GroupEntity group = findByIdOrThrow(groupId);
         return new GroupEntity();
     }
 
     @Override
-    public GroupEntity updateInstructorInGroup(Integer userId, Integer groupId) {
+    public GroupEntity updateInstructorInGroup(Long userId, Long groupId) {
         UserEntity userEntity = userService.findByIdOrThrow(userId);
         checkUserRole(userEntity, RoleEnum.INSTRUCTOR);
         GroupEntity group = findByIdOrThrow(groupId);
         group.setInstructor(userEntity);
-        return new GroupEntity();
+        groupRepository.save(group);
+        return group;
     }
 
     @Override
-    public boolean deleteGroup(Integer groupId) {
+    public boolean deleteGroup(Long groupId) {
         GroupEntity group = findByIdOrThrow(groupId);
         groupRepository.delete(group);
         return true;
     }
 
     @Override
-    public GroupEntity joinToGroup(Integer groupId) {
+    public GroupEntity joinToGroup(Long groupId) {
         return null;
     }
 
     @Override
-    public GroupEntity joinToGroup(Integer userId, Integer groupId) {
+    public UserGroupEntity joinToGroup(Long userId, Long groupId) {
         UserEntity userEntity = userService.findByIdOrThrow(userId);
         GroupEntity groupEntity = findByIdOrThrow(groupId);
 
@@ -73,7 +79,7 @@ public class GroupServiceImpl implements GroupService {
         userGroupEntity.setGroup(groupEntity);
         userGroupEntity.setUser(userEntity);
         userGroupRepository.save(userGroupEntity);
-        return groupEntity;
+        return userGroupEntity;
     }
 
 
@@ -83,7 +89,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupEntity findByIdOrThrow(Integer id) {
+    public GroupEntity findByIdOrThrow(Long id) {
         return groupRepository.findById(id).orElseThrow(
                 () -> new EntityDoesNotExistException(id, GroupEntity.class));
     }

@@ -28,7 +28,4 @@ public class GroupEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity instructor;
-
-    @OneToMany(mappedBy = "group")
-    private Set<UserGroupEntity> userGroup;
 }
