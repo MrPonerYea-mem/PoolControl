@@ -1,11 +1,13 @@
 package mem.MrPonerYea.PoolControl.service.group;
 
 import mem.MrPonerYea.PoolControl.exception.EntityDoesNotExistException;
+import mem.MrPonerYea.PoolControl.exception.GroupException;
 import mem.MrPonerYea.PoolControl.exception.UserException;
 import mem.MrPonerYea.PoolControl.model.dto.GroupRequestDto;
 import mem.MrPonerYea.PoolControl.model.entity.group.GroupEntity;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserEntity;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserGroupEntity;
+import mem.MrPonerYea.PoolControl.model.enumeration.GenderEnum;
 import mem.MrPonerYea.PoolControl.model.enumeration.RoleEnum;
 import mem.MrPonerYea.PoolControl.repository.UserGroupRepository;
 import mem.MrPonerYea.PoolControl.repository.group.GroupRepository;
@@ -74,6 +76,24 @@ public class GroupServiceImpl implements GroupService {
     public UserGroupEntity joinToGroup(Long userId, Long groupId) {
         UserEntity userEntity = userService.findByIdOrThrow(userId);
         GroupEntity groupEntity = findByIdOrThrow(groupId);
+
+        Integer countPlacesInGroup = groupEntity.getCloakroomM() + groupEntity.getCloakroomW();
+        Integer usersInGroup = userGroupRepository.getUsersCountInGroup(groupId);
+        if (usersInGroup >= countPlacesInGroup)
+            throw new GroupException("В группе больше нет мест");
+
+        switch (userEntity.getGender()) {
+            case FEMALE:
+                Integer WomenInGroup = userGroupRepository.getUsersCountInGroupByGender(groupId, GenderEnum.FEMALE);
+                if (WomenInGroup >= groupEntity.getCloakroomW())
+                    throw new GroupException("В группе больше нет мест для женщин");
+                    break;
+            case MALE:
+                Integer MenInGroup = userGroupRepository.getUsersCountInGroupByGender(groupId, GenderEnum.MALE);
+                if (MenInGroup >= groupEntity.getCloakroomM())
+                    throw new GroupException("В группе больше нет мест для мужчин");
+                break;
+        }
 
         UserGroupEntity userGroupEntity = new UserGroupEntity();
         userGroupEntity.setGroup(groupEntity);
