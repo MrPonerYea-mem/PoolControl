@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,8 +34,9 @@ public class UserController {
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    @ApiOperation(httpMethod = "GET", value = "Получени списка инструкторов", produces = "application/json")
+    @ApiOperation(httpMethod = "GET", value = "Получение списка инструкторов", produces = "application/json")
     public ResponseEntity<List<UserEntity>> getInstructors(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date, @RequestParam Integer timeStart) {
         List<UserEntity> instructors = userService.getInstructors(date, timeStart);
         return new ResponseEntity<>(instructors, HttpStatus.OK);
