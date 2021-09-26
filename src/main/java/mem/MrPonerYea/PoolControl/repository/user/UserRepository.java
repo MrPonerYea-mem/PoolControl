@@ -54,7 +54,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "(select count(ge.id) from GroupEntity ge " +
             "where cast(ge.date as date) = :date and ge.instructor = g.instructor) and " +
             ":start between g.instructor.preferTimeStart and g.instructor.preferTimeEnd " +
-            "group by username, timeToWork ")
+            "group by username, timeToWork " +
+            "order by timeToWork")
     List<UserResponseDto> getListInstructorFilter(@Param("date") Date date, @Param("start") Integer start);
 
     UserEntity findByUsername(String username);

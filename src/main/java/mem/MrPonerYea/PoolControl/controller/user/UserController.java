@@ -28,6 +28,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     @ApiOperation(httpMethod = "POST", value = "Регистрация пользователя", produces = "application/json")
     public ResponseEntity<UserEntity> registration(@Valid @RequestBody UserRequestDto user) {
