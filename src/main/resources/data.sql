@@ -51,17 +51,17 @@ INSERT INTO users (id, username, password, email, gender, role, created_at, upda
 VALUES (7, 'a', 'a', 'user4@mail.com', 'FEMALE', 'ADMIN', '2021-08-22 15:58:49.713', '2021-08-22 15:58:49.713');
 
 -- GROUPS
-INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, created_at, updated_at)
-VALUES (1, 43200, 1, 2, 1, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
+INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, date, created_at, updated_at)
+VALUES (1, 43200, 1, 2, 1, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
 
-INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, created_at, updated_at)
-VALUES (2, 43200, 10, 20, 2, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
+INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, date, created_at, updated_at)
+VALUES (2, 43200, 10, 20, 2, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
 
-INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, created_at, updated_at)
-VALUES (3, 43200, 1, 2, 3, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
+INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, date, created_at, updated_at)
+VALUES (3, 43200, 1, 2, 3, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
 
-INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, created_at, updated_at)
-VALUES (4, 43200, 1, 0, 3, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
+INSERT INTO groups (id, time_start, cloakroom_m, cloakroom_w, user_id, date, created_at, updated_at)
+VALUES (4, 43200, 1, 0, 3, '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713', '2021-09-19 15:58:49.713');
 
 --GROUPS-USER
 INSERT INTO users_groups (id, user_id, group_id, created_at, updated_at)
