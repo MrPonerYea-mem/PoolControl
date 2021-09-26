@@ -6,8 +6,10 @@ import lombok.EqualsAndHashCode;
 import mem.MrPonerYea.PoolControl.model.entity.BaseEntity;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserEntity;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserGroupEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = false)
@@ -28,4 +30,8 @@ public class GroupEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity instructor;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date", nullable = false)
+    private Date date;
 }

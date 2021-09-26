@@ -2,9 +2,9 @@ package mem.MrPonerYea.PoolControl.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import mem.MrPonerYea.PoolControl.model.entity.user.UserEntity;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 @ApiModel("DTO - для работы с группами")
@@ -17,4 +17,6 @@ public class GroupRequestDto {
     private Integer cloakroomW;
     @NotNull(message = "instructor - не должен быть пустым")
     private Long instructor_id;
+    @NotNull(message = "date - не должен быть пустым")
+    private Date date;
 }

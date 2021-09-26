@@ -34,8 +34,7 @@ public class GroupServiceImpl implements GroupService {
         groupEntity.setTimeStart(groupRequestDto.getTimeStart());
         groupEntity.setCloakroomW(groupRequestDto.getCloakroomW());
         groupEntity.setCloakroomM(groupRequestDto.getCloakroomM());
-
-        //TODO це костыль надо будет переделать
+        groupEntity.setDate(groupRequestDto.getDate());
         UserEntity userEntity = userService.findByIdOrThrow(groupRequestDto.getInstructor_id());
         checkUserRole(userEntity, RoleEnum.INSTRUCTOR);
 

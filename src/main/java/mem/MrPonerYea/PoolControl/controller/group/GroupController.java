@@ -35,7 +35,6 @@ public class GroupController {
     @PostMapping
     @ApiOperation(httpMethod = "POST", value = "Создание группы", produces = "application/json")
     public ResponseEntity<GroupEntity> createGroup(
-            @AuthenticationPrincipal UserEntity user,
             @Valid @RequestBody GroupRequestDto groupRequestDto) {
         return new ResponseEntity<>(groupService.createGroup(groupRequestDto), HttpStatus.CREATED);
     }
