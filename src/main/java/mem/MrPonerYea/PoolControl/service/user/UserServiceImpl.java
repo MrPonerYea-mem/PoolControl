@@ -2,7 +2,7 @@ package mem.MrPonerYea.PoolControl.service.user;
 
 import mem.MrPonerYea.PoolControl.exception.EntityDoesNotExistException;
 import mem.MrPonerYea.PoolControl.model.dto.UserRequestDto;
-import mem.MrPonerYea.PoolControl.model.entity.group.GroupEntity;
+import mem.MrPonerYea.PoolControl.model.dto.UserResponseDto;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserEntity;
 import mem.MrPonerYea.PoolControl.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,10 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntity> getInstructors(Date date, Integer timeStart) {
-        List<UserEntity> listInstructorByFilter =
-                userRepository.getListInstructorByFilter1(date, timeStart);
-        return listInstructorByFilter;
+    public List<UserResponseDto> getInstructors(Date date, Integer timeStart) {
+        return userRepository.getListInstructorFilter(date, timeStart);
     }
 
     @Override

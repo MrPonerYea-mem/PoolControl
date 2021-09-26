@@ -3,6 +3,7 @@ package mem.MrPonerYea.PoolControl.controller.user;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import mem.MrPonerYea.PoolControl.model.dto.UserRequestDto;
+import mem.MrPonerYea.PoolControl.model.dto.UserResponseDto;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserEntity;
 import mem.MrPonerYea.PoolControl.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,12 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    @ApiOperation(httpMethod = "GET", value = "Получение списка инструкторов", produces = "application/json")
-    public ResponseEntity<List<UserEntity>> getInstructors(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date, @RequestParam Integer timeStart) {
-        List<UserEntity> instructors = userService.getInstructors(date, timeStart);
+    @ApiOperation(httpMethod = "GET",
+            value = "Получение списка инструкторов, у которых время работы попадает " +
+            "в переданное время и у которых есть свободное время в день переданный в параметрах",
+            produces = "application/json")
+    public ResponseEntity<List<UserResponseDto>> getInstructors(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date, @RequestParam Integer timeStart) {
+        List<UserResponseDto> instructors = userService.getInstructors(date, timeStart);
         return new ResponseEntity<>(instructors, HttpStatus.OK);
     }
 }
