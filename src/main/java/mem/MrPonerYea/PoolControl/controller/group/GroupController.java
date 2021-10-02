@@ -18,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -73,5 +74,12 @@ public class GroupController {
             @PathVariable(value = "group_id") Long groupId,
             @PathVariable(value = "instructor_id") Long instructorId) {
         return new ResponseEntity<>(groupService.updateInstructorInGroup(instructorId, groupId), HttpStatus.OK);
+    }
+
+    @GetMapping("/cloakroomM/{cloakroom_m}")
+    @ApiOperation(httpMethod = "GET", value = "1", produces = "application/json")
+    public ResponseEntity<List<GroupEntity>> getListByCloakroomM(
+            @PathVariable(value = "cloakroom_m") Integer cloakroomM) {
+        return new ResponseEntity<>(groupService.getListByCloakroomM(cloakroomM), HttpStatus.OK);
     }
 }

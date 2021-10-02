@@ -1,5 +1,6 @@
 package mem.MrPonerYea.PoolControl.repository;
 
+import mem.MrPonerYea.PoolControl.model.entity.group.GroupEntity;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserGroupEntity;
 import mem.MrPonerYea.PoolControl.model.enumeration.GenderEnum;
 import org.springframework.data.jpa.repository.JpaRepository;

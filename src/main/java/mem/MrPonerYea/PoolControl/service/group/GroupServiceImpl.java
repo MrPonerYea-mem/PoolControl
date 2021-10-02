@@ -14,6 +14,8 @@ import mem.MrPonerYea.PoolControl.repository.group.GroupRepository;
 import mem.MrPonerYea.PoolControl.service.user.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
@@ -111,5 +113,10 @@ public class GroupServiceImpl implements GroupService {
     public GroupEntity findByIdOrThrow(Long id) {
         return groupRepository.findById(id).orElseThrow(
                 () -> new EntityDoesNotExistException(id, GroupEntity.class));
+    }
+
+    @Override
+    public List<GroupEntity> getListByCloakroomM(Integer cloakroomM) {
+        return groupRepository.getAllByCloakroomM(cloakroomM);
     }
 }

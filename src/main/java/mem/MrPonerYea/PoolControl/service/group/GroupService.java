@@ -5,6 +5,8 @@ import mem.MrPonerYea.PoolControl.model.entity.group.GroupEntity;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserEntity;
 import mem.MrPonerYea.PoolControl.model.entity.user.UserGroupEntity;
 
+import java.util.List;
+
 public interface GroupService {
     GroupEntity createGroup(GroupRequestDto groupRequestDto);
 
@@ -19,4 +21,6 @@ public interface GroupService {
     UserGroupEntity joinToGroup(Long userId, Long groupId);
 
     GroupEntity findByIdOrThrow(Long id);
+
+    List<GroupEntity> getListByCloakroomM(Integer cloakroomM);
 }
