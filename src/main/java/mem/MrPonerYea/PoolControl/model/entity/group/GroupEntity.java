@@ -9,6 +9,7 @@ import mem.MrPonerYea.PoolControl.model.entity.user.UserGroupEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -18,8 +19,11 @@ import java.util.Set;
 @Entity
 @ApiModel(value = "Группы - groups")
 public class GroupEntity extends BaseEntity {
+    /*@Column(name = "time_start", nullable = false)
+    private Integer timeStart;*/
+
     @Column(name = "time_start", nullable = false)
-    private Integer timeStart;
+    private LocalTime timeStart;
 
     @Column(name = "cloakroom_m", nullable = false)
     private Integer cloakroomM;

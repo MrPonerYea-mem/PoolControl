@@ -1,7 +1,5 @@
 package mem.MrPonerYea.PoolControl;
 
-import io.swagger.models.auth.In;
-import mem.MrPonerYea.PoolControl.exception.BaseException;
 import mem.MrPonerYea.PoolControl.exception.UserException;
 import mem.MrPonerYea.PoolControl.model.dto.GroupRequestDto;
 import mem.MrPonerYea.PoolControl.model.entity.group.GroupEntity;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Import(value = GroupServiceImpl.class)
 @RunWith(SpringRunner.class)
@@ -67,7 +64,7 @@ public class GroupServiceImplTest {
         groupRequestDto.setCloakroomM(cloakroomM);
         groupRequestDto.setCloakroomW(cloakroomW);
         groupRequestDto.setTimeStart(timeStart);
-        groupRequestDto.setInstructor_id(id);
+        groupRequestDto.setInstructorId(id);
         return groupRequestDto;
     }
 

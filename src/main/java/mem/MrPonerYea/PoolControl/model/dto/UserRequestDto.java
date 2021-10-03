@@ -6,6 +6,7 @@ import lombok.Data;
 import mem.MrPonerYea.PoolControl.model.enumeration.GenderEnum;
 import mem.MrPonerYea.PoolControl.model.enumeration.RoleEnum;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -26,7 +27,7 @@ public class UserRequestDto {
 
     private Integer timeToWork;
 
-    private Integer preferTimeEnd;
+    private LocalTime preferTimeEnd;
 
-    private Integer preferTimeStart;
+    private LocalTime preferTimeStart;
 }

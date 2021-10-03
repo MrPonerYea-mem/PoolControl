@@ -14,6 +14,7 @@ import mem.MrPonerYea.PoolControl.repository.group.GroupRepository;
 import mem.MrPonerYea.PoolControl.service.user.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,16 +33,33 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupEntity createGroup(GroupRequestDto groupRequestDto) {
-        GroupEntity groupEntity = new GroupEntity();
-        groupEntity.setTimeStart(groupRequestDto.getTimeStart());
-        groupEntity.setCloakroomW(groupRequestDto.getCloakroomW());
-        groupEntity.setCloakroomM(groupRequestDto.getCloakroomM());
-        groupEntity.setDate(groupRequestDto.getDate());
-        UserEntity userEntity = userService.findByIdOrThrow(groupRequestDto.getInstructor_id());
-        checkUserRole(userEntity, RoleEnum.INSTRUCTOR);
+        GroupEntity group = new GroupEntity();
+        group.setTimeStart(groupRequestDto.getTimeStart());
+        group.setCloakroomW(groupRequestDto.getCloakroomW());
+        group.setCloakroomM(groupRequestDto.getCloakroomM());
+        group.setDate(groupRequestDto.getDate());
+        UserEntity user = userService.findByIdOrThrow(groupRequestDto.getInstructorId());
+        checkUserRole(user, RoleEnum.INSTRUCTOR);
+        checkInstructorWorkTime(group, user);
+        checkInstructorFreeTime(group, user, groupRequestDto.getDate());
+        return groupRepository.save(group);
+    }
 
-        groupEntity.setInstructor(userEntity);
-        return groupRepository.save(groupEntity);
+    private void checkInstructorFreeTime(GroupEntity group, UserEntity user, Date date) {
+        // Проверка пересечения группы с другой по времени у инструктора
+        List<GroupEntity> userGroupsBetweenTime =
+                groupRepository.getUserGroupsBetweenTime(user, group.getTimeStart(), date);
+        if (!userGroupsBetweenTime.isEmpty())
+            throw new UserException("У инструктора " + user.getUsername() + " уже есть группа в данном промежутке ");
+        group.setInstructor(user);
+    }
+
+    private void checkInstructorWorkTime(GroupEntity group, UserEntity user) {
+        // Проверка попадает ли группа вовремя работы инструктора
+        if (group.getTimeStart().isBefore(user.getTimeStart()) || group.getTimeStart().isAfter(user.getTimeEnd())) {
+            throw new UserException("Время работы " + user.getTimeStart() + " | " + user.getTimeEnd()
+                    + " инструктора " + user.getUsername() + " не попадает во время начала группы " + group.getTimeStart());
+        }
     }
 
     @Override
@@ -53,10 +71,12 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupEntity updateInstructorInGroup(Long userId, Long groupId) {
-        UserEntity userEntity = userService.findByIdOrThrow(userId);
-        checkUserRole(userEntity, RoleEnum.INSTRUCTOR);
+        UserEntity user = userService.findByIdOrThrow(userId);
+        checkUserRole(user, RoleEnum.INSTRUCTOR);
         GroupEntity group = findByIdOrThrow(groupId);
-        group.setInstructor(userEntity);
+        checkInstructorWorkTime(group, user);
+        checkInstructorFreeTime(group, user, group.getDate());
+        group.setInstructor(user);
         groupRepository.save(group);
         return group;
     }
@@ -88,7 +108,7 @@ public class GroupServiceImpl implements GroupService {
                 Integer WomenInGroup = userGroupRepository.getUsersCountInGroupByGender(groupId, GenderEnum.FEMALE);
                 if (WomenInGroup >= groupEntity.getCloakroomW())
                     throw new GroupException("В группе больше нет мест для женщин");
-                    break;
+                break;
             case MALE:
                 Integer MenInGroup = userGroupRepository.getUsersCountInGroupByGender(groupId, GenderEnum.MALE);
                 if (MenInGroup >= groupEntity.getCloakroomM())

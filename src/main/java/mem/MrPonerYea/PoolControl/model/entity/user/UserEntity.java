@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -42,11 +43,17 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "time_to_work")
     private Integer timeToWork;
 
-    @Column(name = "prefer_time_start")
+    /*@Column(name = "prefer_time_start")
     private Integer preferTimeStart;
 
     @Column(name = "prefer_time_end")
-    private Integer preferTimeEnd;
+    private Integer preferTimeEnd;*/
+
+    @Column(name = "time_start")
+    private LocalTime timeStart;
+
+    @Column(name = "time_end")
+    private LocalTime timeEnd ;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

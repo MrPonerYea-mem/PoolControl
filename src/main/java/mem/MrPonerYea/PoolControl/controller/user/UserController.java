@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,8 +29,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping
+    @PostMapping("/reg")
     @ApiOperation(httpMethod = "POST", value = "Регистрация пользователя", produces = "application/json")
     public ResponseEntity<UserEntity> registration(@Valid @RequestBody UserRequestDto user) {
         UserEntity userEntity = userService.registration(user);
@@ -42,7 +42,9 @@ public class UserController {
             value = "Получение списка инструкторов, у которых время работы попадает " +
             "в переданное время и у которых есть свободное время в день переданный в параметрах",
             produces = "application/json")
-    public ResponseEntity<List<UserResponseDto>> getInstructors(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date, @RequestParam Integer timeStart) {
+    public ResponseEntity<List<UserResponseDto>> getInstructors(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date,
+            @RequestParam LocalTime timeStart) {
         List<UserResponseDto> instructors = userService.getInstructors(date, timeStart);
         return new ResponseEntity<>(instructors, HttpStatus.OK);
     }
